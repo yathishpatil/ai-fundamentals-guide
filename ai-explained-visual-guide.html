@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Explained: A Visual Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-light: #1a1f3a;
+            --accent-blue: #4a9eff;
+            --accent-purple: #9d4eff;
+            --accent-cyan: #00d4ff;
+            --text-primary: #e8eaed;
+            --text-secondary: #a8b2d1;
+            --border-color: #2a2f4a;
+            --code-bg: #141824;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(74, 158, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(157, 78, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            animation: pulse 8s ease-in-out infinite 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .visual-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .visual-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(74, 158, 255, 0.2);
+        }
+
+        .diagram-container {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--code-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .diagram-title {
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.1), rgba(157, 78, 255, 0.1));
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .concept-box:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+        }
+
+        .concept-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 0.8rem;
+        }
+
+        .concept-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--code-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-size: 0.9em;
+        }
+
+        .key-term {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .neural-network {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 2rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .layer {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .neuron {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            animation: neuronPulse 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
+        }
+
+        @keyframes neuronPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(74, 158, 255, 0.8); }
+        }
+
+        .layer-label {
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 2rem;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.2), rgba(157, 78, 255, 0.2));
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            border: 2px solid var(--accent-blue);
+            min-width: 150px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .flow-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(74, 158, 255, 0.5);
+        }
+
+        .flow-arrow {
+            color: var(--accent-cyan);
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .analogy-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(74, 158, 255, 0.1));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .analogy-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-item {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-label {
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-value {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 1rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            border: 3px solid var(--bg-dark);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--accent-cyan);
+        }
+
+        @media (max-width: 768px) {
+            .neural-network {
+                flex-direction: column;
+            }
+            
+            .flow-diagram {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(157, 78, 255, 0.15), rgba(74, 158, 255, 0.15));
+            border: 2px solid var(--accent-purple);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .highlight-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin: 0.8rem 0;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>AI Explained</h1>
+            <p class="subtitle">Understanding Artificial Intelligence from the Ground Up</p>
+        </div>
+        <div class="scroll-indicator">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Section 1: What is AI? -->
+        <div class="section">
+            <h2 class="section-title">What is AI?</h2>
+            <p class="section-description">
+                Artificial Intelligence is simply software that can perform tasks that typically require human intelligence. Think of it as teaching computers to recognize patterns, make decisions, and solve problems.
+            </p>
+
+            <div class="visual-card">
+                <div class="analogy-box">
+                    <div class="analogy-title">🧠 Simple Analogy</div>
+                    <p>Imagine teaching a child to recognize animals. You show them many pictures of dogs and cats. Eventually, they learn the patterns: dogs have certain features, cats have others. AI works the same way, but with mathematical patterns instead of pictures in a child's mind.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="concept-box">
+                        <div class="concept-title">Traditional Programming</div>
+                        <p class="concept-text">You write explicit rules:</p>
+                        <p class="concept-text" style="margin-top: 1rem;"><code>If image has pointy ears AND whiskers → Cat</code></p>
+                    </div>
+                    <div class="concept-box">
+                        <div class="concept-title">AI/Machine Learning</div>
+                        <p class="concept-text">Computer learns patterns from examples:</p>
+                        <p class="concept-text" style="margin-top: 1rem;"><code>Show 10,000 cat pictures → AI figures out what makes a cat</code></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Types of AI -->
+        <div class="section">
+            <h2 class="section-title">Three Types of AI</h2>
+            
+            <div class="visual-card">
+                <div class="diagram-container">
+                    <div class="diagram-title">► AI Capability Spectrum</div>
+                    <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                        <div class="concept-box">
+                            <div class="concept-title">1️⃣ Narrow AI (ANI)</div>
+                            <p class="concept-text"><strong>What it is:</strong> AI designed for ONE specific task</p>
+                            <p class="concept-text" style="margin-top: 0.8rem;"><strong>Examples:</strong> Face recognition, spam filters, voice assistants, chess programs</p>
+                            <p class="concept-text" style="margin-top: 0.8rem;"><strong>Status:</strong> ✅ This exists now (what you use daily)</p>
+                        </div>
+                        <div class="concept-box">
+                            <div class="concept-title">2️⃣ General AI (AGI)</div>
+                            <p class="concept-text"><strong>What it is:</strong> AI that can do ANY intellectual task a human can</p>
+                            <p class="concept-text" style="margin-top: 0.8rem;"><strong>Examples:</strong> Hypothetical system that can drive, cook, program, write, and reason about anything</p>
+                            <p class="concept-text" style="margin-top: 0.8rem;"><strong>Status:</strong> ⏳ Doesn't exist yet (research goal)</p>
+                        </div>
+                        <div class="concept-box">
+                            <div class="concept-title">3️⃣ Super AI (ASI)</div>
+                            <p class="concept-text"><strong>What it is:</strong> AI that surpasses human intelligence in all domains</p>
+                            <p class="concept-text" style="margin-top: 0.8rem;"><strong>Examples:</strong> Purely theoretical</p>
+                            <p class="concept-text" style="margin-top: 0.8rem;"><strong>Status:</strong> 🔮 Far future speculation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: How Machine Learning Works -->
+        <div class="section">
+            <h2 class="section-title">How Does Machine Learning Work?</h2>
+            <p class="section-description">
+                Machine Learning (ML) is the most common type of AI today. It's all about <span class="key-term">learning from data</span> instead of following hard-coded rules.
+            </p>
+
+            <div class="visual-card">
+                <div class="diagram-container">
+                    <div class="diagram-title">► The Machine Learning Process</div>
+                    <div class="flow-diagram">
+                        <div class="flow-box">
+                            📊<br>Training Data<br>
+                            <small style="color: var(--text-secondary);">Examples with answers</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">
+                            🧮<br>Learning Algorithm<br>
+                            <small style="color: var(--text-secondary);">Finds patterns</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">
+                            🤖<br>Trained Model<br>
+                            <small style="color: var(--text-secondary);">Can make predictions</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">
+                            ✨<br>New Data<br>
+                            <small style="color: var(--text-secondary);">Make predictions</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analogy-box">
+                    <div class="analogy-title">🎓 Real-World Example: Spam Detection</div>
+                    <ol style="color: var(--text-secondary);">
+                        <li><strong>Training Data:</strong> Feed the AI 100,000 emails labeled as "spam" or "not spam"</li>
+                        <li><strong>Learning:</strong> AI finds patterns (words like "FREE", suspicious links, writing style, etc.)</li>
+                        <li><strong>Model:</strong> AI builds a mathematical model of what spam looks like</li>
+                        <li><strong>Prediction:</strong> New email arrives → AI checks patterns → Classifies as spam or not</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Neural Networks -->
+        <div class="section">
+            <h2 class="section-title">Neural Networks: The Brain-Inspired Architecture</h2>
+            <p class="section-description">
+                Modern AI uses <span class="key-term">neural networks</span> - mathematical systems loosely inspired by how neurons work in our brains.
+            </p>
+
+            <div class="visual-card">
+                <div class="diagram-container">
+                    <div class="diagram-title">► Simple Neural Network Structure</div>
+                    <div class="neural-network">
+                        <div class="layer">
+                            <div class="neuron">I₁</div>
+                            <div class="neuron">I₂</div>
+                            <div class="neuron">I₃</div>
+                            <div class="layer-label">INPUT LAYER<br><small>(Raw data)</small></div>
+                        </div>
+                        
+                        <div style="color: var(--accent-cyan); font-size: 2rem;">⇢</div>
+                        
+                        <div class="layer">
+                            <div class="neuron">H₁</div>
+                            <div class="neuron">H₂</div>
+                            <div class="neuron">H₃</div>
+                            <div class="neuron">H₄</div>
+                            <div class="layer-label">HIDDEN LAYER<br><small>(Pattern detection)</small></div>
+                        </div>
+                        
+                        <div style="color: var(--accent-cyan); font-size: 2rem;">⇢</div>
+                        
+                        <div class="layer">
+                            <div class="neuron">O</div>
+                            <div class="layer-label">OUTPUT LAYER<br><small>(Prediction)</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="highlight-title">🔍 How It Works:</div>
+                    <ul>
+                        <li><strong>Input Layer:</strong> Receives raw data (e.g., pixel values of an image)</li>
+                        <li><strong>Hidden Layers:</strong> Each "neuron" performs mathematical calculations, detecting increasingly complex patterns</li>
+                        <li><strong>Connections:</strong> Each connection has a "weight" that gets adjusted during training</li>
+                        <li><strong>Output Layer:</strong> Produces the final answer (e.g., "This is a cat" or "This is a dog")</li>
+                    </ul>
+                </div>
+
+                <div class="analogy-box">
+                    <div class="analogy-title">👁️ Example: Recognizing a Face</div>
+                    <ul style="color: var(--text-secondary);">
+                        <li><strong>First layer:</strong> Detects basic edges and colors</li>
+                        <li><strong>Second layer:</strong> Combines edges into shapes (eyes, nose, mouth)</li>
+                        <li><strong>Third layer:</strong> Arranges shapes into face structure</li>
+                        <li><strong>Output:</strong> "This is Sarah's face with 95% confidence"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Training AI -->
+        <div class="section">
+            <h2 class="section-title">How AI Learns: Training Process</h2>
+            
+            <div class="visual-card">
+                <div class="diagram-container">
+                    <div class="diagram-title">► Training Loop (Simplified)</div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 1: Random Start</div>
+                            <p class="concept-text">AI starts with random "weights" (doesn't know anything yet)</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 2: Make Prediction</div>
+                            <p class="concept-text">AI looks at training data and makes a guess</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 3: Calculate Error</div>
+                            <p class="concept-text">Compare prediction to correct answer → How wrong was it?</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 4: Adjust Weights</div>
+                            <p class="concept-text">Use "backpropagation" to adjust connections and reduce error</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 5: Repeat Millions of Times</div>
+                            <p class="concept-text">Go through all training data many times until predictions improve</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">Training Time</div>
+                        <div class="comparison-value">Hours to months depending on model size</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Training Data</div>
+                        <div class="comparison-value">Millions to billions of examples</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Computing Power</div>
+                        <div class="comparison-value">Specialized GPUs/TPUs (graphics chips)</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Cost</div>
+                        <div class="comparison-value">$100 to $100+ million for large models</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Large Language Models -->
+        <div class="section">
+            <h2 class="section-title">How Large Language Models (LLMs) Work</h2>
+            <p class="section-description">
+                The AI you're using right now (like ChatGPT, Claude, etc.) are called <span class="key-term">Large Language Models</span>. They're neural networks specifically trained on vast amounts of text to understand and generate human language.
+            </p>
+
+            <div class="visual-card">
+                <div class="highlight-box">
+                    <div class="highlight-title">🧬 What Makes LLMs Special:</div>
+                    <div class="grid-2">
+                        <div>
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Size</h4>
+                            <p class="concept-text">Billions or trillions of "parameters" (adjustable weights)</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Training Data</h4>
+                            <p class="concept-text">Books, websites, code, conversations - massive text datasets</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Architecture</h4>
+                            <p class="concept-text">Uses "Transformers" with "attention mechanism" to understand context</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Capability</h4>
+                            <p class="concept-text">Can write, reason, code, translate, summarize, and more</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">► How LLMs Generate Text</div>
+                    <div class="analogy-box">
+                        <div class="analogy-title">📝 The Prediction Game</div>
+                        <p>LLMs work by predicting the next word (or "token") based on all previous words:</p>
+                        <div style="margin: 1.5rem 0; padding: 1rem; background: var(--bg-dark); border-radius: 8px;">
+                            <p style="color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace;">
+                                Input: "The capital of France is"<br>
+                                AI predicts: "Paris" (highest probability)<br>
+                                Then: "The capital of France is Paris"<br>
+                                Next prediction: "." or "," etc.
+                            </p>
+                        </div>
+                        <p>The AI repeats this process, one word at a time, building coherent responses. It's using patterns learned from billions of text examples to predict what should come next.</p>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">► Key Concept: Tokens</div>
+                    <div class="grid-2">
+                        <div class="concept-box">
+                            <div class="concept-title">What are Tokens?</div>
+                            <p class="concept-text">Text is broken into chunks called "tokens" (roughly 3/4 of a word)</p>
+                            <p class="concept-text" style="margin-top: 1rem;">Example:<br><code>"Hello, world!"</code> = 3 tokens<br><code>["Hello", ",", " world!"]</code></p>
+                        </div>
+                        <div class="concept-box">
+                            <div class="concept-title">Why It Matters</div>
+                            <p class="concept-text">• AI processes tokens, not characters<br>• Context window = max tokens AI can see at once<br>• Larger context = better understanding</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Training vs Inference -->
+        <div class="section">
+            <h2 class="section-title">Training vs. Inference</h2>
+            
+            <div class="visual-card">
+                <div class="comparison-grid">
+                    <div class="concept-box">
+                        <div class="concept-title">🎓 Training Phase</div>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✦ <strong>What:</strong> Teaching the AI</li>
+                            <li>✦ <strong>When:</strong> Done once (or occasionally)</li>
+                            <li>✦ <strong>How:</strong> Feed massive datasets, adjust billions of parameters</li>
+                            <li>✦ <strong>Time:</strong> Weeks to months</li>
+                            <li>✦ <strong>Cost:</strong> $$$$ (millions)</li>
+                            <li>✦ <strong>Hardware:</strong> Thousands of GPUs</li>
+                        </ul>
+                    </div>
+                    <div class="concept-box">
+                        <div class="concept-title">⚡ Inference Phase</div>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✦ <strong>What:</strong> Using the trained AI</li>
+                            <li>✦ <strong>When:</strong> Every time you interact with it</li>
+                            <li>✦ <strong>How:</strong> Input goes through frozen model, output comes out</li>
+                            <li>✦ <strong>Time:</strong> Seconds</li>
+                            <li>✦ <strong>Cost:</strong> $ (cents per query)</li>
+                            <li>✦ <strong>Hardware:</strong> Single GPU or even CPU</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="analogy-box" style="margin-top: 2rem;">
+                    <div class="analogy-title">🍳 Cooking Analogy</div>
+                    <p><strong>Training</strong> = Learning to cook by attending culinary school for years, trying thousands of recipes, making mistakes, perfecting techniques</p>
+                    <p style="margin-top: 0.8rem;"><strong>Inference</strong> = Using your cooking skills to make dinner tonight in 30 minutes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Key Terms -->
+        <div class="section">
+            <h2 class="section-title">Essential AI Terms Explained</h2>
+            
+            <div class="grid-2">
+                <div class="concept-box">
+                    <div class="concept-title">Parameters</div>
+                    <p class="concept-text">The adjustable "knobs" in a neural network. GPT-4 has ~1.7 trillion parameters. More parameters generally = more capable, but also more expensive to run.</p>
+                </div>
+
+                <div class="concept-box">
+                    <div class="concept-title">Context Window</div>
+                    <p class="concept-text">How much text the AI can "remember" at once. Like short-term memory. Claude can handle up to 200K tokens (~500 pages of text).</p>
+                </div>
+
+                <div class="concept-box">
+                    <div class="concept-title">Prompt</div>
+                    <p class="concept-text">Your input to the AI. The instruction or question you give it. Better prompts = better results (prompt engineering is a skill).</p>
+                </div>
+
+                <div class="concept-box">
+                    <div class="concept-title">Temperature</div>
+                    <p class="concept-text">Controls randomness. Low temperature (0.1) = predictable, focused. High temperature (1.0) = creative, varied. Like adjusting "creativity level".</p>
+                </div>
+
+                <div class="concept-box">
+                    <div class="concept-title">Fine-Tuning</div>
+                    <p class="concept-text">Taking a pre-trained model and training it more on specific data. Like a general doctor getting specialized training in cardiology.</p>
+                </div>
+
+                <div class="concept-box">
+                    <div class="concept-title">Hallucination</div>
+                    <p class="concept-text">When AI confidently states false information. It "makes things up" based on patterns, not knowledge. This is a current limitation of LLMs.</p>
+                </div>
+
+                <div class="concept-box">
+                    <div class="concept-title">RAG (Retrieval Augmented Generation)</div>
+                    <p class="concept-text">Technique where AI searches external databases before answering, reducing hallucinations and adding current information.</p>
+                </div>
+
+                <div class="concept-box">
+                    <div class="concept-title">Embedding</div>
+                    <p class="concept-text">Converting words/text into numbers (vectors) that capture meaning. Words with similar meanings have similar numbers. Used for search and comparisons.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: How AI Systems Are Built -->
+        <div class="section">
+            <h2 class="section-title">Building an AI System: The Full Picture</h2>
+            
+            <div class="visual-card">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">1. Data Collection & Preparation</div>
+                        <p class="concept-text">Gather massive datasets, clean them, remove biases, format consistently. This is 80% of the work!</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">2. Choose Architecture</div>
+                        <p class="concept-text">Select neural network type: Transformer for language, CNN for images, RNN for sequences, etc.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">3. Training</div>
+                        <p class="concept-text">Feed data through model millions of times, adjust parameters, monitor for overfitting (memorizing vs learning)</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">4. Evaluation</div>
+                        <p class="concept-text">Test on unseen data. Check accuracy, precision, recall, F1 score, and other metrics</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">5. Deployment</div>
+                        <p class="concept-text">Put model into production. Optimize for speed (inference optimization), set up monitoring, handle errors</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">6. Monitoring & Updating</div>
+                        <p class="concept-text">Track performance, retrain periodically, fix issues, update as needs change</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Different Types of Learning -->
+        <div class="section">
+            <h2 class="section-title">Three Ways AI Learns</h2>
+            
+            <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <div class="visual-card" style="padding: 2rem;">
+                    <div class="concept-title" style="font-size: 1.6rem; margin-bottom: 1rem;">📚 Supervised Learning</div>
+                    <p class="concept-text" style="margin-bottom: 1rem;"><strong>What:</strong> Learning from labeled examples</p>
+                    <p class="concept-text" style="margin-bottom: 1rem;"><strong>Example:</strong> Show AI 10,000 images labeled "cat" or "dog" → AI learns to classify new images</p>
+                    <p class="concept-text"><strong>Used for:</strong> Classification, prediction, image recognition, spam detection</p>
+                </div>
+
+                <div class="visual-card" style="padding: 2rem;">
+                    <div class="concept-title" style="font-size: 1.6rem; margin-bottom: 1rem;">🔍 Unsupervised Learning</div>
+                    <p class="concept-text" style="margin-bottom: 1rem;"><strong>What:</strong> Finding patterns in unlabeled data</p>
+                    <p class="concept-text" style="margin-bottom: 1rem;"><strong>Example:</strong> Give AI customer data → It groups similar customers together (clustering)</p>
+                    <p class="concept-text"><strong>Used for:</strong> Anomaly detection, recommendation systems, data compression</p>
+                </div>
+
+                <div class="visual-card" style="padding: 2rem;">
+                    <div class="concept-title" style="font-size: 1.6rem; margin-bottom: 1rem;">🎮 Reinforcement Learning</div>
+                    <p class="concept-text" style="margin-bottom: 1rem;"><strong>What:</strong> Learning through trial and error with rewards</p>
+                    <p class="concept-text" style="margin-bottom: 1rem;"><strong>Example:</strong> AI plays chess → Gets reward for winning, penalty for losing → Learns strategy</p>
+                    <p class="concept-text"><strong>Used for:</strong> Game AI, robotics, self-driving cars, trading algorithms</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11: Current Limitations -->
+        <div class="section">
+            <h2 class="section-title">What AI Can't Do (Yet)</h2>
+            
+            <div class="visual-card">
+                <div class="grid-2">
+                    <div class="concept-box">
+                        <div class="concept-title">❌ True Understanding</div>
+                        <p class="concept-text">AI recognizes patterns but doesn't truly "understand" meaning like humans do. It's statistical, not conscious.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">❌ Common Sense</div>
+                        <p class="concept-text">Struggles with obvious things humans know. Example: "Water is wet" or "you can't fit an elephant in a backpack".</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">❌ Causal Reasoning</div>
+                        <p class="concept-text">Confuses correlation with causation. Can't truly reason about cause and effect like humans.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">❌ Learning from Few Examples</div>
+                        <p class="concept-text">Humans learn from 1-2 examples. AI needs thousands or millions of training examples.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">❌ Transfer Learning (Well)</div>
+                        <p class="concept-text">Struggles to apply knowledge from one domain to another as flexibly as humans.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">❌ Explaining Decisions</div>
+                        <p class="concept-text">Often a "black box" - hard to explain why AI made a specific decision (interpretability problem).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12: The Future -->
+        <div class="section">
+            <h2 class="section-title">Where Is AI Heading?</h2>
+            
+            <div class="visual-card">
+                <div class="highlight-box">
+                    <div class="highlight-title">🚀 Near-Term (1-3 years)</div>
+                    <ul>
+                        <li>Multimodal AI that seamlessly understands text, images, audio, video together</li>
+                        <li>More reliable AI with fewer hallucinations</li>
+                        <li>Personalized AI assistants that know your preferences and context</li>
+                        <li>AI coding assistants that can build entire applications</li>
+                        <li>Better reasoning and problem-solving capabilities</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="highlight-title">🔮 Medium-Term (3-10 years)</div>
+                    <ul>
+                        <li>AI agents that can complete complex multi-step tasks autonomously</li>
+                        <li>Significant advances in robotics with AI control</li>
+                        <li>AI scientific researchers that can discover new drugs, materials</li>
+                        <li>Much more energy-efficient AI models</li>
+                        <li>Possibly early forms of AGI (Artificial General Intelligence)</li>
+                    </ul>
+                </div>
+
+                <div class="analogy-box">
+                    <div class="analogy-title">⚖️ Important Considerations</div>
+                    <p>As AI becomes more powerful, society faces critical questions:</p>
+                    <ul style="color: var(--text-secondary); margin-top: 1rem;">
+                        <li><strong>Ethics:</strong> Bias, fairness, privacy, and accountability</li>
+                        <li><strong>Safety:</strong> Ensuring AI systems are reliable and safe</li>
+                        <li><strong>Jobs:</strong> How work changes as AI automates tasks</li>
+                        <li><strong>Governance:</strong> Who controls powerful AI systems?</li>
+                        <li><strong>Alignment:</strong> Making sure AI goals align with human values</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Section: Summary -->
+        <div class="section">
+            <h2 class="section-title">Key Takeaways</h2>
+            
+            <div class="visual-card">
+                <div class="grid-2">
+                    <div class="concept-box">
+                        <div class="concept-title">💡 What AI Is</div>
+                        <p class="concept-text">Software that learns patterns from data to make predictions and decisions, rather than following explicit rules.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">🧠 How It Works</div>
+                        <p class="concept-text">Neural networks with billions of parameters are trained on massive datasets to recognize patterns and generate outputs.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">⚡ Current State</div>
+                        <p class="concept-text">We have powerful "narrow AI" for specific tasks. True general intelligence (AGI) doesn't exist yet.</p>
+                    </div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">🎯 Best Use</div>
+                        <p class="concept-text">AI excels at pattern recognition, generation, and automation. Use it as a powerful tool, but verify outputs and maintain human oversight.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, rgba(74, 158, 255, 0.1), rgba(157, 78, 255, 0.1)); border-radius: 12px;">
+                    <h3 style="color: var(--accent-cyan); font-size: 1.5rem; margin-bottom: 1rem;">🌟 Remember</h3>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto;">
+                        AI is a tool created by humans, trained on human knowledge, and designed to augment human capabilities. Understanding how it works helps you use it more effectively and critically.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 3rem; background: var(--bg-light); border-top: 1px solid var(--border-color);">
+        <p style="color: var(--text-secondary);">
+            Created to help you understand AI • Keep learning and exploring! 🚀
+        </p>
+    </div>
+</body>
+</html>

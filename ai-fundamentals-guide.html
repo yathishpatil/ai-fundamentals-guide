@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fundamentals: A Visual Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+
+        .visual-box {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .diagram {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        svg {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .key-point strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: -30px;
+            width: 2px;
+            background: #667eea;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .neural-network-viz {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 40px;
+            background: #f7fafc;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .layer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .neuron {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .layer-label {
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+            margin-top: 15px;
+        }
+
+        code {
+            background: #2d3748;
+            color: #f7fafc;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .analogy-box {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .analogy-box h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .neural-network-viz {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 AI Fundamentals</h1>
+            <p>A Visual Guide to Understanding Artificial Intelligence</p>
+        </div>
+
+        <div class="content">
+            <!-- Section 1: What is AI? -->
+            <div class="section">
+                <h2>1. What is AI?</h2>
+                
+                <p>Artificial Intelligence (AI) is the ability of machines to perform tasks that typically require human intelligence. Think of it as teaching computers to think, learn, and make decisions.</p>
+
+                <div class="visual-box">
+                    <div class="diagram">
+                        <div class="diagram-title">The AI Universe</div>
+                        <svg width="100%" height="400" viewBox="0 0 800 400">
+                            <!-- Outer circle - AI -->
+                            <circle cx="400" cy="200" r="180" fill="#667eea" opacity="0.2" stroke="#667eea" stroke-width="3"/>
+                            <text x="400" y="50" text-anchor="middle" font-size="24" font-weight="bold" fill="#667eea">Artificial Intelligence</text>
+                            <text x="400" y="75" text-anchor="middle" font-size="14" fill="#4a5568">Machines that mimic human intelligence</text>
+                            
+                            <!-- Middle circle - Machine Learning -->
+                            <circle cx="400" cy="200" r="130" fill="#764ba2" opacity="0.2" stroke="#764ba2" stroke-width="3"/>
+                            <text x="400" y="130" text-anchor="middle" font-size="20" font-weight="bold" fill="#764ba2">Machine Learning</text>
+                            <text x="400" y="150" text-anchor="middle" font-size="13" fill="#4a5568">Systems that learn from data</text>
+                            
+                            <!-- Inner circle - Deep Learning -->
+                            <circle cx="400" cy="230" r="70" fill="#f59e0b" opacity="0.3" stroke="#f59e0b" stroke-width="3"/>
+                            <text x="400" y="220" text-anchor="middle" font-size="18" font-weight="bold" fill="#f59e0b">Deep Learning</text>
+                            <text x="400" y="240" text-anchor="middle" font-size="12" fill="#4a5568">Neural networks with</text>
+                            <text x="400" y="255" text-anchor="middle" font-size="12" fill="#4a5568">many layers</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Traditional Programming</h4>
+                        <p>Rules + Data = Answer</p>
+                        <p style="font-size: 0.9em; color: #718096;">You explicitly tell the computer every step to follow</p>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Machine Learning</h4>
+                        <p>Data + Answer = Rules</p>
+                        <p style="font-size: 0.9em; color: #718096;">The computer figures out the rules by studying examples</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: How Neural Networks Work -->
+            <div class="section">
+                <h2>2. How Neural Networks Work</h2>
+                
+                <div class="analogy-box">
+                    <h4>🧩 The Brain Analogy</h4>
+                    <p>Your brain has billions of neurons connected together. Each neuron receives signals, processes them, and passes them on. Artificial neural networks work similarly, but with mathematical neurons!</p>
+                </div>
+
+                <div class="visual-box">
+                    <div class="diagram">
+                        <div class="diagram-title">Neural Network Architecture</div>
+                        <svg width="100%" height="300" viewBox="0 0 800 300">
+                            <!-- Input Layer -->
+                            <g id="input-layer">
+                                <circle cx="100" cy="80" r="25" fill="#667eea" opacity="0.8"/>
+                                <circle cx="100" cy="150" r="25" fill="#667eea" opacity="0.8"/>
+                                <circle cx="100" cy="220" r="25" fill="#667eea" opacity="0.8"/>
+                                <text x="100" y="280" text-anchor="middle" font-size="16" font-weight="bold" fill="#667eea">Input Layer</text>
+                                <text x="100" y="295" text-anchor="middle" font-size="12" fill="#4a5568">(Raw data)</text>
+                            </g>
+
+                            <!-- Hidden Layer 1 -->
+                            <g id="hidden-layer-1">
+                                <circle cx="300" cy="60" r="25" fill="#764ba2" opacity="0.8"/>
+                                <circle cx="300" cy="120" r="25" fill="#764ba2" opacity="0.8"/>
+                                <circle cx="300" cy="180" r="25" fill="#764ba2" opacity="0.8"/>
+                                <circle cx="300" cy="240" r="25" fill="#764ba2" opacity="0.8"/>
+                                <text x="300" y="280" text-anchor="middle" font-size="16" font-weight="bold" fill="#764ba2">Hidden Layer</text>
+                                <text x="300" y="295" text-anchor="middle" font-size="12" fill="#4a5568">(Pattern detection)</text>
+                            </g>
+
+                            <!-- Hidden Layer 2 -->
+                            <g id="hidden-layer-2">
+                                <circle cx="500" cy="60" r="25" fill="#764ba2" opacity="0.8"/>
+                                <circle cx="500" cy="120" r="25" fill="#764ba2" opacity="0.8"/>
+                                <circle cx="500" cy="180" r="25" fill="#764ba2" opacity="0.8"/>
+                                <circle cx="500" cy="240" r="25" fill="#764ba2" opacity="0.8"/>
+                                <text x="500" y="280" text-anchor="middle" font-size="16" font-weight="bold" fill="#764ba2">Hidden Layer</text>
+                                <text x="500" y="295" text-anchor="middle" font-size="12" fill="#4a5568">(Complex patterns)</text>
+                            </g>
+
+                            <!-- Output Layer -->
+                            <g id="output-layer">
+                                <circle cx="700" cy="150" r="25" fill="#f59e0b" opacity="0.8"/>
+                                <text x="700" y="280" text-anchor="middle" font-size="16" font-weight="bold" fill="#f59e0b">Output Layer</text>
+                                <text x="700" y="295" text-anchor="middle" font-size="12" fill="#4a5568">(Final prediction)</text>
+                            </g>
+
+                            <!-- Connections -->
+                            <line x1="125" y1="80" x2="275" y2="60" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            <line x1="125" y1="80" x2="275" y2="120" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            <line x1="125" y1="80" x2="275" y2="180" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            <line x1="125" y1="80" x2="275" y2="240" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            
+                            <line x1="125" y1="150" x2="275" y2="60" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            <line x1="125" y1="150" x2="275" y2="120" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            <line x1="125" y1="150" x2="275" y2="180" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            <line x1="125" y1="150" x2="275" y2="240" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            
+                            <line x1="325" y1="120" x2="475" y2="120" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            <line x1="325" y1="180" x2="475" y2="180" stroke="#cbd5e0" stroke-width="1" opacity="0.5"/>
+                            
+                            <line x1="525" y1="120" x2="675" y2="150" stroke="#cbd5e0" stroke-width="2" opacity="0.7"/>
+                            <line x1="525" y1="180" x2="675" y2="150" stroke="#cbd5e0" stroke-width="2" opacity="0.7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <h3>What Happens in Each Neuron?</h3>
+                
+                <div class="key-point">
+                    <strong>Step 1: Receive Inputs</strong><br>
+                    Each neuron receives multiple signals (numbers) from the previous layer.
+                </div>
+
+                <div class="key-point">
+                    <strong>Step 2: Weight and Sum</strong><br>
+                    Each input is multiplied by a "weight" (importance factor), then all are added together. This is like saying "some features matter more than others."
+                </div>
+
+                <div class="key-point">
+                    <strong>Step 3: Add Bias</strong><br>
+                    A bias term is added to adjust the threshold for activation. This helps the neuron decide when to "fire."
+                </div>
+
+                <div class="key-point">
+                    <strong>Step 4: Activation Function</strong><br>
+                    The result passes through an activation function (like ReLU or Sigmoid) that decides if and how strongly the neuron should activate. This introduces non-linearity.
+                </div>
+
+                <div class="visual-box">
+                    <div class="diagram">
+                        <div class="diagram-title">Inside a Single Neuron</div>
+                        <svg width="100%" height="250" viewBox="0 0 800 250">
+                            <!-- Inputs -->
+                            <circle cx="100" cy="80" r="15" fill="#667eea"/>
+                            <text x="70" y="85" text-anchor="end" font-size="14">x₁</text>
+                            <circle cx="100" cy="125" r="15" fill="#667eea"/>
+                            <text x="70" y="130" text-anchor="end" font-size="14">x₂</text>
+                            <circle cx="100" cy="170" r="15" fill="#667eea"/>
+                            <text x="70" y="175" text-anchor="end" font-size="14">x₃</text>
+
+                            <!-- Weights -->
+                            <text x="180" y="85" text-anchor="middle" font-size="12" fill="#764ba2">w₁</text>
+                            <text x="180" y="130" text-anchor="middle" font-size="12" fill="#764ba2">w₂</text>
+                            <text x="180" y="175" text-anchor="middle" font-size="12" fill="#764ba2">w₃</text>
+
+                            <!-- Lines to neuron -->
+                            <line x1="115" y1="80" x2="275" y2="125" stroke="#764ba2" stroke-width="2"/>
+                            <line x1="115" y1="125" x2="275" y2="125" stroke="#764ba2" stroke-width="2"/>
+                            <line x1="115" y1="170" x2="275" y2="125" stroke="#764ba2" stroke-width="2"/>
+
+                            <!-- Main neuron -->
+                            <circle cx="300" cy="125" r="40" fill="#764ba2" opacity="0.3" stroke="#764ba2" stroke-width="3"/>
+                            <text x="300" y="115" text-anchor="middle" font-size="12" font-weight="bold">Σ</text>
+                            <text x="300" y="135" text-anchor="middle" font-size="10">w₁x₁ + w₂x₂</text>
+                            <text x="300" y="148" text-anchor="middle" font-size="10">+ w₃x₃ + b</text>
+
+                            <!-- Arrow to activation -->
+                            <line x1="340" y1="125" x2="420" y2="125" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#f59e0b"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Activation function -->
+                            <rect x="440" y="85" width="120" height="80" fill="#f59e0b" opacity="0.2" stroke="#f59e0b" stroke-width="2" rx="10"/>
+                            <text x="500" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#f59e0b">Activation</text>
+                            <text x="500" y="138" text-anchor="middle" font-size="11" fill="#4a5568">Function</text>
+                            <text x="500" y="153" text-anchor="middle" font-size="10" fill="#4a5568">(e.g., ReLU)</text>
+
+                            <!-- Output -->
+                            <line x1="560" y1="125" x2="640" y2="125" stroke="#10b981" stroke-width="3" marker-end="url(#arrowhead2)"/>
+                            <defs>
+                                <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+                                </marker>
+                            </defs>
+                            <circle cx="680" cy="125" r="20" fill="#10b981"/>
+                            <text x="680" y="155" text-anchor="middle" font-size="14" fill="#10b981" font-weight="bold">Output</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: How AI Learns -->
+            <div class="section">
+                <h2>3. How AI Learns (Training Process)</h2>
+
+                <p>This is where the magic happens! AI doesn't start smart—it learns from experience, just like you did.</p>
+
+                <div class="visual-box">
+                    <div class="diagram">
+                        <div class="diagram-title">The Training Loop</div>
+                        <svg width="100%" height="450" viewBox="0 0 800 450">
+                            <!-- Step 1 -->
+                            <rect x="50" y="50" width="180" height="80" fill="#667eea" opacity="0.2" stroke="#667eea" stroke-width="2" rx="10"/>
+                            <text x="140" y="85" text-anchor="middle" font-size="16" font-weight="bold" fill="#667eea">1. Feed Data</text>
+                            <text x="140" y="105" text-anchor="middle" font-size="12" fill="#4a5568">Show examples to</text>
+                            <text x="140" y="120" text-anchor="middle" font-size="12" fill="#4a5568">the network</text>
+
+                            <!-- Arrow 1 -->
+                            <line x1="230" y1="90" x2="300" y2="90" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow3)"/>
+                            <defs>
+                                <marker id="arrow3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#4a5568"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Step 2 -->
+                            <rect x="320" y="50" width="180" height="80" fill="#764ba2" opacity="0.2" stroke="#764ba2" stroke-width="2" rx="10"/>
+                            <text x="410" y="85" text-anchor="middle" font-size="16" font-weight="bold" fill="#764ba2">2. Make Prediction</text>
+                            <text x="410" y="105" text-anchor="middle" font-size="12" fill="#4a5568">Network guesses</text>
+                            <text x="410" y="120" text-anchor="middle" font-size="12" fill="#4a5568">the answer</text>
+
+                            <!-- Arrow 2 -->
+                            <line x1="500" y1="90" x2="570" y2="90" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow4)"/>
+                            <defs>
+                                <marker id="arrow4" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#4a5568"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Step 3 -->
+                            <rect x="590" y="50" width="180" height="80" fill="#f59e0b" opacity="0.2" stroke="#f59e0b" stroke-width="2" rx="10"/>
+                            <text x="680" y="85" text-anchor="middle" font-size="16" font-weight="bold" fill="#f59e0b">3. Calculate Error</text>
+                            <text x="680" y="105" text-anchor="middle" font-size="12" fill="#4a5568">How wrong was</text>
+                            <text x="680" y="120" text-anchor="middle" font-size="12" fill="#4a5568">the prediction?</text>
+
+                            <!-- Arrow down -->
+                            <line x1="680" y1="130" x2="680" y2="200" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow5)"/>
+                            <defs>
+                                <marker id="arrow5" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#4a5568"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Step 4 -->
+                            <rect x="590" y="220" width="180" height="80" fill="#10b981" opacity="0.2" stroke="#10b981" stroke-width="2" rx="10"/>
+                            <text x="680" y="255" text-anchor="middle" font-size="16" font-weight="bold" fill="#10b981">4. Backpropagation</text>
+                            <text x="680" y="275" text-anchor="middle" font-size="12" fill="#4a5568">Send error signal</text>
+                            <text x="680" y="290" text-anchor="middle" font-size="12" fill="#4a5568">backwards</text>
+
+                            <!-- Arrow left -->
+                            <line x1="590" y1="260" x2="520" y2="260" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow6)"/>
+                            <defs>
+                                <marker id="arrow6" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#4a5568"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Step 5 -->
+                            <rect x="320" y="220" width="180" height="80" fill="#ef4444" opacity="0.2" stroke="#ef4444" stroke-width="2" rx="10"/>
+                            <text x="410" y="255" text-anchor="middle" font-size="16" font-weight="bold" fill="#ef4444">5. Update Weights</text>
+                            <text x="410" y="275" text-anchor="middle" font-size="12" fill="#4a5568">Adjust all the</text>
+                            <text x="410" y="290" text-anchor="middle" font-size="12" fill="#4a5568">connection strengths</text>
+
+                            <!-- Arrow left and up -->
+                            <line x1="320" y1="260" x2="140" y2="260" stroke="#4a5568" stroke-width="3"/>
+                            <line x1="140" y1="260" x2="140" y2="140" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow7)"/>
+                            <defs>
+                                <marker id="arrow7" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#4a5568"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Repeat text -->
+                            <text x="400" y="380" text-anchor="middle" font-size="20" font-weight="bold" fill="#667eea">Repeat millions of times!</text>
+                            <text x="400" y="405" text-anchor="middle" font-size="14" fill="#4a5568">Each cycle is called an "epoch"</text>
+                            <text x="400" y="425" text-anchor="middle" font-size="14" fill="#4a5568">The network gets better with each iteration</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="analogy-box">
+                    <h4>🎯 Learning to Shoot Hoops</h4>
+                    <p><strong>Attempt 1:</strong> You throw the ball and miss by 3 feet to the left.</p>
+                    <p><strong>Adjustment:</strong> Next time, you aim 3 feet to the right.</p>
+                    <p><strong>Attempt 2:</strong> Now you're only 6 inches too far right.</p>
+                    <p><strong>Keep adjusting:</strong> After hundreds of shots, you consistently make baskets!</p>
+                    <p style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;">This is exactly how neural networks learn—through repeated attempts and adjustments based on errors.</p>
+                </div>
+
+                <h3>Key Concepts in Training</h3>
+
+                <div class="key-point">
+                    <strong>Loss Function:</strong> A mathematical way to measure how wrong the AI's predictions are. Lower loss = better performance.
+                </div>
+
+                <div class="key-point">
+                    <strong>Optimizer (e.g., Adam, SGD):</strong> The algorithm that decides how to adjust the weights. Think of it as the "coach" telling the AI how to improve.
+                </div>
+
+                <div class="key-point">
+                    <strong>Learning Rate:</strong> How big of a step the AI takes when adjusting weights. Too big = overshooting, too small = slow learning.
+                </div>
+
+                <div class="key-point">
+                    <strong>Batch Size:</strong> How many examples the AI looks at before updating weights. Bigger batches = more stable but slower learning.
+                </div>
+            </div>
+
+            <!-- Section 4: Types of AI -->
+            <div class="section">
+                <h2>4. Types of AI & Learning Approaches</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>🎓 Supervised Learning</h4>
+                        <p><strong>What it is:</strong> Learning from labeled examples</p>
+                        <p><strong>Example:</strong> Showing the AI thousands of photos labeled "cat" or "dog" so it learns to identify them</p>
+                        <p><strong>Use cases:</strong> Image classification, spam detection, medical diagnosis</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🔍 Unsupervised Learning</h4>
+                        <p><strong>What it is:</strong> Finding patterns in unlabeled data</p>
+                        <p><strong>Example:</strong> Grouping customers by shopping behavior without being told what groups to create</p>
+                        <p><strong>Use cases:</strong> Customer segmentation, anomaly detection, data compression</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🎮 Reinforcement Learning</h4>
+                        <p><strong>What it is:</strong> Learning through trial and error with rewards</p>
+                        <p><strong>Example:</strong> AI learning to play chess by playing millions of games and getting rewarded for wins</p>
+                        <p><strong>Use cases:</strong> Game AI, robotics, autonomous vehicles</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🎨 Generative AI</h4>
+                        <p><strong>What it is:</strong> Creating new content based on learned patterns</p>
+                        <p><strong>Example:</strong> ChatGPT generating text, DALL-E creating images</p>
+                        <p><strong>Use cases:</strong> Content creation, code generation, design assistance</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Transformers & Modern AI -->
+            <div class="section">
+                <h2>5. Transformers: The Architecture Behind ChatGPT</h2>
+
+                <p>Transformers revolutionized AI in 2017. They're the secret sauce behind GPT, Claude, and most modern language models.</p>
+
+                <div class="visual-box">
+                    <div class="diagram">
+                        <div class="diagram-title">Transformer Architecture (Simplified)</div>
+                        <svg width="100%" height="500" viewBox="0 0 800 500">
+                            <!-- Input -->
+                            <rect x="300" y="20" width="200" height="50" fill="#667eea" opacity="0.3" stroke="#667eea" stroke-width="2" rx="5"/>
+                            <text x="400" y="50" text-anchor="middle" font-size="16" font-weight="bold" fill="#667eea">Input Text</text>
+
+                            <!-- Arrow down -->
+                            <line x1="400" y1="70" x2="400" y2="100" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow8)"/>
+                            <defs>
+                                <marker id="arrow8" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#4a5568"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Token Embedding -->
+                            <rect x="300" y="110" width="200" height="50" fill="#764ba2" opacity="0.3" stroke="#764ba2" stroke-width="2" rx="5"/>
+                            <text x="400" y="135" text-anchor="middle" font-size="14" font-weight="bold" fill="#764ba2">Token Embedding</text>
+                            <text x="400" y="150" text-anchor="middle" font-size="11" fill="#4a5568">Convert words to numbers</text>
+
+                            <!-- Arrow -->
+                            <line x1="400" y1="160" x2="400" y2="190" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow9)"/>
+
+                            <!-- Self-Attention -->
+                            <rect x="250" y="200" width="300" height="80" fill="#f59e0b" opacity="0.2" stroke="#f59e0b" stroke-width="3" rx="5"/>
+                            <text x="400" y="230" text-anchor="middle" font-size="16" font-weight="bold" fill="#f59e0b">Self-Attention Mechanism</text>
+                            <text x="400" y="250" text-anchor="middle" font-size="12" fill="#4a5568">"What words should I pay attention to?"</text>
+                            <text x="400" y="268" text-anchor="middle" font-size="11" fill="#4a5568">Understands relationships between words</text>
+
+                            <!-- Side explanation -->
+                            <rect x="580" y="200" width="180" height="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" rx="5"/>
+                            <text x="670" y="225" text-anchor="middle" font-size="11" font-weight="bold" fill="#92400e">Example:</text>
+                            <text x="670" y="242" text-anchor="middle" font-size="10" fill="#92400e">"The animal didn't cross</text>
+                            <text x="670" y="256" text-anchor="middle" font-size="10" fill="#92400e">the street because it</text>
+                            <text x="670" y="270" text-anchor="middle" font-size="10" fill="#92400e">was too tired."</text>
+
+                            <!-- Arrow -->
+                            <line x1="400" y1="280" x2="400" y2="310" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow10)"/>
+
+                            <!-- Feed Forward -->
+                            <rect x="300" y="320" width="200" height="50" fill="#10b981" opacity="0.3" stroke="#10b981" stroke-width="2" rx="5"/>
+                            <text x="400" y="345" text-anchor="middle" font-size="14" font-weight="bold" fill="#10b981">Feed Forward Network</text>
+                            <text x="400" y="360" text-anchor="middle" font-size="11" fill="#4a5568">Process the information</text>
+
+                            <!-- Repeat indication -->
+                            <rect x="250" y="190" width="300" height="190" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,5" rx="5"/>
+                            <text x="580" y="320" text-anchor="start" font-size="13" fill="#ef4444" font-weight="bold">× 12-96 layers</text>
+
+                            <!-- Arrow -->
+                            <line x1="400" y1="380" x2="400" y2="410" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow11)"/>
+
+                            <!-- Output -->
+                            <rect x="300" y="420" width="200" height="50" fill="#667eea" opacity="0.3" stroke="#667eea" stroke-width="2" rx="5"/>
+                            <text x="400" y="450" text-anchor="middle" font-size="16" font-weight="bold" fill="#667eea">Output Prediction</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <h3>🔑 The Magic of Attention</h3>
+
+                <div class="key-point">
+                    <strong>Self-Attention:</strong> Allows the AI to weigh the importance of different words in a sentence. When reading "it" in a sentence, the AI figures out what "it" refers to by looking at all other words.
+                </div>
+
+                <div class="key-point">
+                    <strong>Parallel Processing:</strong> Unlike older models that read words one-by-one, Transformers look at all words at once, making them much faster to train.
+                </div>
+
+                <div class="key-point">
+                    <strong>Scalability:</strong> You can stack many layers (Claude has dozens!), and each layer understands increasingly complex patterns.
+                </div>
+            </div>
+
+            <!-- Section 6: How LLMs Work -->
+            <div class="section">
+                <h2>6. Large Language Models (LLMs) Like ChatGPT & Claude</h2>
+
+                <p>LLMs are trained on massive amounts of text from the internet. They learn to predict the next word in a sequence.</p>
+
+                <div class="visual-box">
+                    <div class="diagram">
+                        <div class="diagram-title">How Text Prediction Works</div>
+                        <svg width="100%" height="200" viewBox="0 0 800 200">
+                            <rect x="50" y="60" width="180" height="80" fill="#667eea" opacity="0.2" stroke="#667eea" stroke-width="2" rx="5"/>
+                            <text x="140" y="90" text-anchor="middle" font-size="14" fill="#667eea">Input:</text>
+                            <text x="140" y="110" text-anchor="middle" font-size="12" font-weight="bold">"The sky is"</text>
+
+                            <text x="280" y="105" text-anchor="middle" font-size="30" fill="#4a5568">→</text>
+
+                            <rect x="330" y="60" width="180" height="80" fill="#764ba2" opacity="0.2" stroke="#764ba2" stroke-width="2" rx="5"/>
+                            <text x="420" y="85" text-anchor="middle" font-size="14" fill="#764ba2">LLM Processing</text>
+                            <text x="420" y="105" text-anchor="middle" font-size="11" fill="#4a5568">Analyzes patterns</text>
+                            <text x="420" y="120" text-anchor="middle" font-size="11" fill="#4a5568">from training data</text>
+
+                            <text x="560" y="105" text-anchor="middle" font-size="30" fill="#4a5568">→</text>
+
+                            <rect x="590" y="20" width="150" height="40" fill="#10b981" opacity="0.3" stroke="#10b981" stroke-width="1" rx="5"/>
+                            <text x="665" y="35" text-anchor="middle" font-size="11" fill="#10b981">"blue" (90%)</text>
+                            <text x="665" y="50" text-anchor="middle" font-size="9" fill="#4a5568">most likely</text>
+
+                            <rect x="590" y="70" width="150" height="40" fill="#f59e0b" opacity="0.3" stroke="#f59e0b" stroke-width="1" rx="5"/>
+                            <text x="665" y="85" text-anchor="middle" font-size="11" fill="#f59e0b">"clear" (5%)</text>
+                            <text x="665" y="100" text-anchor="middle" font-size="9" fill="#4a5568">possible</text>
+
+                            <rect x="590" y="120" width="150" height="40" fill="#ef4444" opacity="0.3" stroke="#ef4444" stroke-width="1" rx="5"/>
+                            <text x="665" y="135" text-anchor="middle" font-size="11" fill="#ef4444">"purple" (0.1%)</text>
+                            <text x="665" y="150" text-anchor="middle" font-size="9" fill="#4a5568">unlikely</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="analogy-box">
+                    <h4>📚 The Autocomplete Analogy</h4>
+                    <p>Remember using autocomplete on your phone? That's essentially what LLMs do, but at a massive scale!</p>
+                    <p style="margin-top: 10px;">Instead of just predicting one word, they can predict entire sentences, paragraphs, and even maintain context across long conversations—all by repeatedly asking "what's the most likely next word?"</p>
+                </div>
+
+                <h3>Training an LLM: The Three Phases</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Phase 1: Pre-training</h4>
+                        <p><strong>Data:</strong> Trillions of words from books, websites, code, etc.</p>
+                        <p><strong>Task:</strong> Predict the next word in millions of text samples</p>
+                        <p><strong>Duration:</strong> Weeks to months on thousands of powerful GPUs</p>
+                        <p><strong>Cost:</strong> Tens of millions of dollars</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 style="color: #764ba2; margin-bottom: 10px;">Phase 2: Supervised Fine-tuning</h4>
+                        <p><strong>Data:</strong> High-quality question-answer pairs written by humans</p>
+                        <p><strong>Task:</strong> Learn to follow instructions and give helpful responses</p>
+                        <p><strong>Duration:</strong> Days to weeks</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">Phase 3: RLHF (Reinforcement Learning from Human Feedback)</h4>
+                        <p><strong>Data:</strong> Humans rank different responses from good to bad</p>
+                        <p><strong>Task:</strong> Learn what kind of responses humans prefer</p>
+                        <p><strong>Result:</strong> AI that's helpful, harmless, and honest</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Key Concepts -->
+            <div class="section">
+                <h2>7. Important Concepts to Know</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>🎲 Temperature</h4>
+                        <p>Controls randomness in responses</p>
+                        <p style="font-size: 0.9em;"><strong>Low (0.1):</strong> Focused, predictable</p>
+                        <p style="font-size: 0.9em;"><strong>High (1.0):</strong> Creative, varied</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🎯 Tokens</h4>
+                        <p>AI's "words" (usually ~4 characters)</p>
+                        <p style="font-size: 0.9em;">"Hello World" ≈ 3 tokens</p>
+                        <p style="font-size: 0.9em;">Models have token limits (context windows)</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🧠 Parameters</h4>
+                        <p>All the weights in the network</p>
+                        <p style="font-size: 0.9em;">GPT-3: 175 billion parameters</p>
+                        <p style="font-size: 0.9em;">More parameters = more "knowledge"</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>💭 Embeddings</h4>
+                        <p>Converting words to numerical vectors</p>
+                        <p style="font-size: 0.9em;">Similar words have similar vectors</p>
+                        <p style="font-size: 0.9em;">"king" - "man" + "woman" ≈ "queen"</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>⚠️ Hallucinations</h4>
+                        <p>When AI generates false information</p>
+                        <p style="font-size: 0.9em;">The model is predicting, not retrieving facts</p>
+                        <p style="font-size: 0.9em;">Always verify important information!</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🎨 Fine-tuning</h4>
+                        <p>Adapting a pre-trained model</p>
+                        <p style="font-size: 0.9em;">Train on your specific data</p>
+                        <p style="font-size: 0.9em;">Much cheaper than training from scratch</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: AI in Practice -->
+            <div class="section">
+                <h2>8. Common AI Models & Applications</h2>
+
+                <h3>🗣️ Language Models</h3>
+                <div class="key-point">
+                    <strong>Examples:</strong> GPT-4, Claude, LLaMA, Gemini<br>
+                    <strong>What they do:</strong> Understand and generate human-like text<br>
+                    <strong>Uses:</strong> Chatbots, content creation, code generation, translation
+                </div>
+
+                <h3>👁️ Computer Vision Models</h3>
+                <div class="key-point">
+                    <strong>Examples:</strong> YOLO, ResNet, Vision Transformers<br>
+                    <strong>What they do:</strong> Understand images and videos<br>
+                    <strong>Uses:</strong> Facial recognition, medical imaging, autonomous vehicles, object detection
+                </div>
+
+                <h3>🎨 Generative Models</h3>
+                <div class="key-point">
+                    <strong>Examples:</strong> DALL-E, Midjourney, Stable Diffusion, Sora<br>
+                    <strong>What they do:</strong> Create new images, videos, or audio<br>
+                    <strong>Uses:</strong> Art generation, design, video creation, music composition
+                </div>
+
+                <h3>🗣️ Speech Models</h3>
+                <div class="key-point">
+                    <strong>Examples:</strong> Whisper, WaveNet<br>
+                    <strong>What they do:</strong> Convert speech to text and vice versa<br>
+                    <strong>Uses:</strong> Voice assistants, transcription, accessibility tools
+                </div>
+            </div>
+
+            <!-- Section 9: Limitations -->
+            <div class="section">
+                <h2>9. Current Limitations of AI</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>⚠️ No True Understanding</h4>
+                        <p>AI finds patterns in data but doesn't truly "understand" meaning like humans do</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>📅 Knowledge Cutoffs</h4>
+                        <p>Training data is from the past. AI doesn't know about very recent events</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🔢 Math Struggles</h4>
+                        <p>LLMs can make calculation errors. They're better at reasoning than arithmetic</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>📊 Data Bias</h4>
+                        <p>AI learns from human-created data, including our biases and prejudices</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>💰 Resource Intensive</h4>
+                        <p>Training large models requires massive computing power and energy</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🎯 Context Windows</h4>
+                        <p>Limited memory—can't remember everything from long conversations</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 10: Future -->
+            <div class="section">
+                <h2>10. The Future of AI</h2>
+
+                <div class="visual-box">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">Emerging Trends</h3>
+                    
+                    <div class="key-point">
+                        <strong>🤖 Multimodal AI:</strong> Models that can process text, images, audio, and video simultaneously (like GPT-4V, Claude 3.5)
+                    </div>
+
+                    <div class="key-point">
+                        <strong>🎯 Smaller, Specialized Models:</strong> Efficient models that run on your phone or laptop instead of massive data centers
+                    </div>
+
+                    <div class="key-point">
+                        <strong>🧪 AI Agents:</strong> AI systems that can take actions, use tools, and accomplish complex multi-step tasks autonomously
+                    </div>
+
+                    <div class="key-point">
+                        <strong>🔒 AI Safety & Alignment:</strong> Ensuring AI systems are reliable, secure, and aligned with human values
+                    </div>
+
+                    <div class="key-point">
+                        <strong>🧬 Scientific Discovery:</strong> AI accelerating research in medicine, materials science, climate, and more
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Section -->
+            <div class="section" style="background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); padding: 40px; border-radius: 15px; margin-top: 60px;">
+                <h2 style="text-align: center; color: #667eea;">Key Takeaways</h2>
+                
+                <div class="key-point">
+                    <strong>1. AI learns from data:</strong> It's all about pattern recognition, not magic.
+                </div>
+
+                <div class="key-point">
+                    <strong>2. Neural networks mimic brains:</strong> Connected neurons that adjust their connections through training.
+                </div>
+
+                <div class="key-point">
+                    <strong>3. Training is iterative:</strong> Make prediction → measure error → adjust weights → repeat millions of times.
+                </div>
+
+                <div class="key-point">
+                    <strong>4. Transformers revolutionized AI:</strong> The attention mechanism allows models to understand context.
+                </div>
+
+                <div class="key-point">
+                    <strong>5. LLMs predict text:</strong> They generate responses by repeatedly predicting the next most likely word.
+                </div>
+
+                <div class="key-point">
+                    <strong>6. AI has limitations:</strong> No true understanding, can hallucinate, and reflects training data biases.
+                </div>
+
+                <div class="key-point">
+                    <strong>7. The field is evolving rapidly:</strong> New breakthroughs happen constantly, making AI more capable and accessible.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
