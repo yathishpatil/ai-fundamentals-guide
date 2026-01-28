@@ -2,7 +2,6 @@
   "name": "ai-fundamentals-guide",
   "version": "1.0.0",
   "description": "Comprehensive visual guide to AI fundamentals, RAG, enterprise deployment, and security",
-  "private": flase,
   "homepage": "https://yathishpatil.github.io/ai-fundamentals-guide"
   "dependencies": {
     "react": "^18.2.0",
