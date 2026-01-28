@@ -32,12 +32,12 @@ This interactive guide covers **11 comprehensive sections**:
 ## 🚀 Quick Start
 
 ### View Online
-Visit: `https://YOUR_GITHUB_USERNAME.github.io/ai-fundamentals-guide`
+Visit: "https://github.com/yathishpatil/ai-fundamentals-guide"
 
 ### Run Locally
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_GITHUB_USERNAME/ai-fundamentals-guide.git
+git clone https://github.com/yathishpatil/ai-fundamentals-guide
 cd ai-fundamentals-guide
 
 # Install dependencies
@@ -92,12 +92,6 @@ MIT License - feel free to use for your consulting practice
 
 ## 🤝 Contributing
 
-Created for SecOps24 and the cybersecurity community. Feedback and improvements welcome!
-
-## 📧 Contact
-
-For cybersecurity consulting and AI security assessments, visit: [SecOps24](https://secops24.com)
+Created for cybersecurity community. Feedback and improvements welcome!
 
 ---
-
-**Note:** Replace `YOUR_GITHUB_USERNAME` with your actual GitHub username in the URLs above.
