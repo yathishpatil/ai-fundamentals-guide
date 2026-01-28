@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ai-fundamentals-guide/static/css/main.9f088a99.css",
+    "main.js": "/ai-fundamentals-guide/static/js/main.996d05e7.js",
+    "index.html": "/ai-fundamentals-guide/index.html",
+    "main.9f088a99.css.map": "/ai-fundamentals-guide/static/css/main.9f088a99.css.map",
+    "main.996d05e7.js.map": "/ai-fundamentals-guide/static/js/main.996d05e7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9f088a99.css",
+    "static/js/main.996d05e7.js"
+  ]
+}
