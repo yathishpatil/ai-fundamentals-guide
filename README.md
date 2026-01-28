@@ -32,12 +32,12 @@ This interactive guide covers **11 comprehensive sections**:
 ## 🚀 Quick Start
 
 ### View Online
-Visit: "https://github.com/yathishpatil/ai-fundamentals-guide"
+Visit: "https://yathishpatil.github.io/ai-fundamentals-guide/"
 
 ### Run Locally
 ```bash
 # Clone the repository
-git clone https://github.com/yathishpatil/ai-fundamentals-guide
+git clone https://yathishpatil.github.io/ai-fundamentals-guide/
 cd ai-fundamentals-guide
 
 # Install dependencies
